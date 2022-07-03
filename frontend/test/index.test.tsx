@@ -1,14 +1,13 @@
-import {render, screen} from '@testing-library/react'
-import Home from '../pages/index'
-import '@testing-library/jest-dom'
+import { render, screen } from "@testing-library/react";
+import Home from "../pages/index";
+import "@testing-library/jest-dom";
 
-describe('Home', () => {
-    it('renders the index page', () => {
-        render(<Home />)
+describe("Home", () => {
+  it("renders the index page", () => {
+    render(<Home />);
 
-        // @ts-ignore`
-        const header = screen.getByText('Hello World!')
+    const header = screen.getByText("Hello World!");
 
-        expect(header).toBeInTheDocument()
-    })
-})
+    expect(header).toBeInTheDocument();
+  });
+});

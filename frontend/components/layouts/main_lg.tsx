@@ -2,7 +2,7 @@ import { Box, Container } from "@chakra-ui/react";
 import Head from "next/Head";
 import Nav from './nav'
 
-const Main = ({ children, router }: any) => {
+const Splash = ({ children, router }: any) => {
   return (
     <Box as="main">
       <Head>
@@ -10,11 +10,11 @@ const Main = ({ children, router }: any) => {
         <title>Django Appointment Scheduler App - Home</title>
       </Head>
       <Nav />
-      <Container maxW="container.md" pt={10}>
+      <Container maxW="container.lg" pt={10}>
         {children}
       </Container>
     </Box>
   );
 };
 
-export default Main;
+export default Splash;
