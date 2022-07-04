@@ -1,13 +1,13 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import Nav from "../components/layouts/nav";
+import ContactCard from "../components/ContactCard";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Layouts/Nav",
-  component: Nav,
+  title: "Components/ContactCard",
+  component: ContactCard,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-} as ComponentMeta<typeof Nav>;
+} as ComponentMeta<typeof ContactCard>;
 
-export const Navigation = () => <Nav />;
+export const Navigation = () => <ContactCard />;
