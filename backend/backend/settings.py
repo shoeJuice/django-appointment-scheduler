@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+from datetime import timedelta
 import environ
 from pathlib import Path
 
@@ -62,6 +62,20 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware'
 ]
 
+#Rest_framework settings
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication', ),
+    'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer', )
+}
+
+#Simple_jwt Settings
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=25),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
+}
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
@@ -92,6 +106,11 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# User Validation
+
+AUTH_USER_MODEL = 'appointment_scheduler.User'
 
 
 # Password validation
@@ -135,6 +154,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#CORS Settings
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
+

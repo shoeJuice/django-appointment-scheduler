@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserChangeForm
 from .models import Appointment
 from .models import AvailabilityTime
 from .models import Employee
@@ -6,12 +8,30 @@ from .models import InquiryMessage
 from .models import User
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email_address')
+class EmployeeInline(admin.StackedInline):
+    model = Employee
+    can_delete = True
+    verbose_name_plural = 'employee'
 
 
-class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email_address', 'is_available')
+class EmployeeChangeForm(UserChangeForm):
+    
+
+    class Meta(UserChangeForm.Meta):
+        model = Employee
+
+    
+class EmployeeAdmin(UserAdmin):
+    form = EmployeeChangeForm
+    fieldsets = UserAdmin.fieldsets + (
+        ('Employee Info', {'fields': ('is_available',)}),
+    )
+    readonly_fields = ('date_joined',)
+
+
+class UserAdmin(UserAdmin):
+    list_display = ('first_name', 'last_name', 'email', 'username', 'is_staff',)
+    readonly_fields = ('date_joined', )
 
 
 class AppointmentAdmin(admin.ModelAdmin):

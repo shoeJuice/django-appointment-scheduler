@@ -17,15 +17,24 @@ from django.contrib import admin
 from django.urls import include
 from django.urls import path
 from rest_framework import routers
+from rest_framework_simplejwt import views as jwt_views
+
 from appointment_scheduler import views
+
 
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
 router.register(r'employees', views.EmployeeView, 'employee')
 router.register(r'appointments', views.AppointmentView, 'appointment')
+router.register(r'inquiries', views.InquiryView, 'inquiry')
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls)),
+    path('auth/token', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
 ]

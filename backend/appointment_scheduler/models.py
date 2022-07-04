@@ -1,14 +1,70 @@
+from datetime import datetime
+from datetime import timezone
 import uuid
 
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 
+class UserManager(BaseUserManager):
+
+    def create_user(self, username, email, password=None, **kwargs):
+        """
+        Create and return a `User` with an email address, username, and password.
+        """
+        if username is None:
+            raise TypeError('Users must have a username.')
+        if email is None:
+            raise TypeError('Users must have an email address.')
+
+        date_joined = datetime.now(timezone.utc)
+        user = self.model(username=username, email=self.normalize_email(email), date_joined=date_joined, **kwargs)
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+    
+    def create_superuser(self, username, email, password, first_name, last_name):
+        """
+        Create and return a `User` with superuser (admin) permissions.
+        """
+        if password is None:
+            raise TypeError('Admins must have a password')
+        if email is None:
+            raise TypeError('Admins must have an email.')
+        if username is None:
+            raise TypeError('Admins must have a username.')
+        if first_name is None:
+            raise TypeError('Admins must have a first name.')
+        if last_name is None:
+            raise TypeError('Admins must have a last name.')
+
+        user = self.create_user(username, email, password, first_name=first_name, last_name=last_name)
+        user.is_superuser = True
+        user.is_staff = True
+        user.save(using=self._db)
+
+        return user
+
 # Create your models here.
 
-class User(models.Model):
+class User(AbstractBaseUser, PermissionsMixin):
+    objects = UserManager()
+
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
-    email_address = models.CharField(max_length=140, null=True)
+    email = models.EmailField(db_index=True, unique=True, null=True, blank=True)
+    username = models.CharField(db_index=True, max_length=255, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(editable=False, auto_now=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    
 
     @property
     def f_name(self):
@@ -19,11 +75,17 @@ class User(models.Model):
         return self.last_name
 
     def __str__(self):
-        return (self.f_name + " " + self.l_name)
+        return self.username
 
 
 class Employee(User):
     is_available = models.BooleanField(null=True)
+
+
+    class Meta:
+        permissions = [
+            ("view_users", "Can view all users")
+        ]
 
 
 class AvailabilityTime(models.Model):

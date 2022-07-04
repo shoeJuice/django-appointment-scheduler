@@ -1,13 +1,17 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import *
+from .models import Appointment
+from .models import Employee
+from .models import InquiryMessage
+
 
 
 class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = User
-        fields = ('id', 'first_name', 'last_name', 'email_address')
-
+        model = get_user_model()
+        fields = ('id', 'first_name', 'last_name', 'email', 'username', 'is_active', 'date_joined', 'is_staff')
+        read_only_field = ('is_active', 'date_joined', 'is_staff')
 
 class EmployeeSerializer(serializers.ModelSerializer):
 
@@ -16,7 +20,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = ('id', 'first_name', 'last_name', 'email_address', 'is_available', 'availability', 'appointments')
+        fields = ('id', 'first_name', 'last_name', 'email', 'is_available', 'availability', 'appointments')
 
 class AppointmentSerializer(serializers.ModelSerializer):
 
@@ -27,3 +31,11 @@ class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = ('id', 'customer', 'employee', 'appointment_date')
+
+
+class InquirySerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = InquiryMessage
+        fields = ('sender_first_name', 'sender_last_name', 'sender_email_address', 'sender_phone_number', 'inquiry_description')
