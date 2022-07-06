@@ -25,6 +25,7 @@ from appointment_scheduler import views
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'user')
+#router.register(r'user', views.UserAPIView, basename='user')
 router.register(r'employees', views.EmployeeView, 'employee')
 router.register(r'appointments', views.AppointmentView, 'appointment')
 router.register(r'inquiries', views.InquiryView, 'inquiry')
@@ -35,6 +36,8 @@ router.register(r'inquiries', views.InquiryView, 'inquiry')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/user/', views.UserAPIView.as_view(), name='login'),
+    path('api/register/', views.RegisterUserAPIView.as_view(), name='register'),
     path('auth/token', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/token/refresh', jwt_views.TokenRefreshView.as_view(), name='token_refresh')
 ]

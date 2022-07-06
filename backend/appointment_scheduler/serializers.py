@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Appointment
+from .models import Appointment, User
 from .models import Employee
 from .models import InquiryMessage
 
@@ -39,3 +39,41 @@ class InquirySerializer(serializers.ModelSerializer):
     class Meta:
         model = InquiryMessage
         fields = ('sender_first_name', 'sender_last_name', 'sender_email_address', 'sender_phone_number', 'inquiry_description')
+
+
+class RegisterUserSerializer(serializers.ModelSerializer):
+
+    first_name = serializers.CharField(read_only=False, source='user.first_name')
+    last_name = serializers.CharField(read_only=False, source='user.last_name')
+    class Meta:
+        model = get_user_model()
+        fields = ['email', 'username', 'password', 'first_name', 'last_name',]
+
+    #def to_internal_value(self, data):
+    #    internal_value = super(RegisterUserSerializer, self).to_internal_value(data)
+    #    my_first_name_field_raw_value = data.get("first_name")
+    #    my_last_name_field_raw_value = data.get("last_name")
+    #    my_first_name_field_value = my_first_name_field_raw_value
+    #    my_last_name_field_value = my_last_name_field_raw_value
+    #    internal_value.update({
+    #        "first_name": my_first_name_field_value,
+    #        "last_name": my_last_name_field_value
+    #    })
+    #    return internal_value
+
+    def create(self, validated_data):
+        print("Request Data:", self.data)
+        print("Request Context", self.context.get('request').data)
+        print("Validated Data: ", self.validated_data)
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+            first_name=validated_data['user']['first_name'],
+            last_name=validated_data['user']['last_name']
+        )
+        print(validated_data.keys())
+        return user
+
+    
+        

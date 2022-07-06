@@ -2,6 +2,7 @@ from datetime import datetime
 from datetime import timezone
 import uuid
 
+from django import forms
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
@@ -10,7 +11,7 @@ from django.db import models
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username, email, password=None, **kwargs):
+    def create_user(self, username, email, password, **kwargs):
         """
         Create and return a `User` with an email address, username, and password.
         """
@@ -18,6 +19,8 @@ class UserManager(BaseUserManager):
             raise TypeError('Users must have a username.')
         if email is None:
             raise TypeError('Users must have an email address.')
+        if password is None:
+            raise TypeError('Users must have a password.')
 
         date_joined = datetime.now(timezone.utc)
         user = self.model(username=username, email=self.normalize_email(email), date_joined=date_joined, **kwargs)
