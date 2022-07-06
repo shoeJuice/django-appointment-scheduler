@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Flex, HStack, Text, Button, Image } from "@chakra-ui/react";
 import NextImage from "next/image";
-import NextLink from "next/link"
-
+import NextLink from "next/link";
+import AuthContext from "../../context/AuthContext";
 /**
  * Navigation Component
  */
 function Nav() {
+  // @ts-ignore
+  const { user } = useContext(AuthContext);
+
   return (
     <Flex
       flexDirection="row"
@@ -24,7 +27,7 @@ function Nav() {
       </>
 
       <HStack spacing={5}>
-        <NextLink href='/'>
+        <NextLink href="/">
           <Button
             variant="link"
             color="white"
@@ -34,7 +37,7 @@ function Nav() {
             Home
           </Button>
         </NextLink>
-        <NextLink href='/about'>
+        <NextLink href="/about">
           <Button
             variant="link"
             color="white"
@@ -44,7 +47,7 @@ function Nav() {
             About Us
           </Button>
         </NextLink>
-        <NextLink href='/bookings'>
+        <NextLink href="/bookings">
           <Button
             variant="link"
             color="white"
@@ -54,7 +57,7 @@ function Nav() {
             Bookings
           </Button>
         </NextLink>
-        <NextLink href='/contact'>
+        <NextLink href="/contact">
           <Button
             variant="link"
             color="white"
@@ -64,14 +67,17 @@ function Nav() {
             Contact Us!
           </Button>
         </NextLink>
-        <Button
-          bgColor="orange.300"
-          color="white"
-          _hover={{ bgColor: "orange.400" }}
-          _active={{ bgColor: "orange.500" }}
-        >
-          Sign In
-        </Button>
+        {user ? <Text color='white'>Logged in as {user.username} </Text> : <></>}
+        <NextLink href={user ? "/auth/signout" : "/auth/signin"}>
+          <Button
+            bgColor="orange.300"
+            color="white"
+            _hover={{ bgColor: "orange.400" }}
+            _active={{ bgColor: "orange.500" }}
+          >
+            {user ? "Sign Out" : "Sign In"}
+          </Button>
+        </NextLink>
       </HStack>
     </Flex>
   );

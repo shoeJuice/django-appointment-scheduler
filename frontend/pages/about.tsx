@@ -11,6 +11,7 @@ const AboutPage: NextPage = () => {
     <Main>
       <Head>
         <title>About - Zouk Studios</title>
+        <link rel="icon" href="/zouk_studios_icon_alt.ico" />
       </Head>
       <Flex
         flexDirection="column"
@@ -21,7 +22,7 @@ const AboutPage: NextPage = () => {
         pt={10}
         pb={100}
         borderRadius={10}
-        boxShadow='dark lg'
+        boxShadow="dark lg"
       >
         <Flex textAlign="center" flexDirection="column">
           <Text fontSize="6xl" fontWeight="medium" color="white">
@@ -38,18 +39,16 @@ const AboutPage: NextPage = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
-        <Box
-            textAlign="center"
-        >
+        <Box textAlign="center">
           <Text pt={10} fontWeight="medium" fontSize="4xl" color="white">
             Meet the Team
           </Text>
           <Divider width="400px" />
         </Box>
         <HStack pt={6} spacing={7}>
-            <ContactCard />
-            <ContactCard />
-            <ContactCard />
+          <ContactCard />
+          <ContactCard />
+          <ContactCard />
         </HStack>
       </Flex>
     </Main>

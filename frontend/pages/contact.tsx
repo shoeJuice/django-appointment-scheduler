@@ -4,24 +4,22 @@ import type { NextPage } from "next";
 import Head from "next/Head";
 
 import Main from "../components/layouts/main";
-import ContactCard from "../components/ContactCard";
 import ContactForm from "../components/ContactForm";
-import Animate from "../components/layouts/Animate";
+
 
 const ContactPage: NextPage = () => {
   return (
     <Main>
       <Head>
         <title>Contact - Zouk Studios</title>
+        <link rel="icon" href="/zouk_studios_icon_alt.ico" />
       </Head>
       <Flex
+        marginY='auto'
         flexDirection="column"
         alignItems="center"
-        justifyContent="space-between"
-        bgColor="#2D3748"
-        px={40}
-        pt={10}
-        pb={100}
+        py={10}
+        px={20}
         borderRadius={8}
         boxShadow='dark lg'
       >

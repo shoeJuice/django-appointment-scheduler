@@ -23,14 +23,22 @@ type ContactFormProps = {
   width: number | "px" | string;
 };
 
-function ContactForm({ width }: ContactFormProps) {
-  const [firstName, setFirstName] = useState<String>();
-  const [lastName, setLastName] = useState<String>();
-  const [emailAddress, setEmailAddress] = useState<String>();
-  const [telephoneAddress, setTelephoneAddress] = useState<String>();
-  const [message, setMessage] = useState<String>();
+type GuestMessage = {
+  sender_first_name: String,
+  sender_last_name: String,
+  sender_email_address: String,
+  sender_phone_number: String,
+  inquiry_description: String,
+}
 
-  const handleSubmit = (item) => {
+function ContactForm({ width }: ContactFormProps) {
+  const [firstName, setFirstName] = useState<String>("");
+  const [lastName, setLastName] = useState<String>("");
+  const [emailAddress, setEmailAddress] = useState<String>("");
+  const [telephoneAddress, setTelephoneAddress] = useState<String>("");
+  const [message, setMessage] = useState<String>("");
+
+  const handleSubmit = (item : GuestMessage) => {
     axios.post("http://localhost:8000/api/inquiries/", item).then(({ status }) => {
       if (status === 200 || status === 203 || status === 201) {
         console.log("Post Successful");
@@ -131,7 +139,7 @@ function ContactForm({ width }: ContactFormProps) {
         _active={{ bgColor: "orange.500" }}
         type="submit"
         onClick={() => {
-          const contactMessage = {
+          const contactMessage : GuestMessage = {
             sender_first_name: firstName,
             sender_last_name: lastName,
             sender_email_address: emailAddress,
