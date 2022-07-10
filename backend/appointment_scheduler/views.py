@@ -49,6 +49,16 @@ class EmployeeView(viewsets.ModelViewSet):
         if self.request.user.is_staff:
             return Employee.objects.all()
 
+
+class CustomerView(viewsets.ModelViewSet):
+
+    serializer_class = CustomerSerializer
+    pagination_class = StandardResultsSetPagination
+    permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Customer.objects.all()
+
 class AppointmentView(viewsets.ModelViewSet):
     
     serializer_class = AppointmentSerializer

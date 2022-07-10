@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Appointment, User
+from .models import Appointment
 from .models import Employee
 from .models import InquiryMessage
+from .models import User
+from .models import Customer
 
 
 
@@ -15,12 +17,20 @@ class UserSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
 
-    availability = serializers.StringRelatedField(many=True)
+    availabilities = serializers.StringRelatedField(many=True)
     appointments = serializers.HyperlinkedRelatedField(many=True, view_name='appointment-detail', read_only=True)
 
     class Meta:
         model = Employee
-        fields = ('id', 'first_name', 'last_name', 'email', 'is_available', 'availability', 'appointments')
+        fields = ('id', 'first_name', 'last_name', 'email', 'is_available', 'availabilities', 'appointments')
+
+class CustomerSerializer(serializers.ModelSerializer):
+
+    appointments = serializers.HyperlinkedRelatedField(many=True, view_name='appointment-detail', read_only=True)
+
+    class Meta:
+        model = Customer
+        fields = ('id', 'first_name', 'last_name', 'email', 'is_available', 'balance', 'appointments')
 
 class AppointmentSerializer(serializers.ModelSerializer):
 

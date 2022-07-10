@@ -62,6 +62,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_customer = models.BooleanField(default=True)
     date_joined = models.DateTimeField(editable=False, auto_now=True)
 
     USERNAME_FIELD = 'email'
@@ -81,9 +82,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
+class Customer(User):
+    balance = models.IntegerField(editable=True, null=True, blank=True)
+
+
 class Employee(User):
     is_available = models.BooleanField(null=True)
-
 
     class Meta:
         permissions = [
@@ -94,17 +98,17 @@ class Employee(User):
 class AvailabilityTime(models.Model):
     start_from = models.DateTimeField(null=True)
     end_at = models.DateTimeField(null=True)   
-    availability_for = models.ForeignKey(Employee, related_name='availability', on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, related_name='availabilities', on_delete=models.CASCADE)
 
     def __str__(self):
         start_time = self.start_from.strftime("%H:%M:%S %p")
         end_time = self.end_at.strftime("%H:%M:%S %p")
-        return f"{start_time} - {end_time}"
+        return f"Employee: {self.employee.f_name} {self.employee.l_name} {start_time} - {end_time}"
 
 
 class Appointment(models.Model):
     
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointment_assigned_by')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='appointments')
     
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='appointments')
     
