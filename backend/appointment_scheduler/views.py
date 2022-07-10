@@ -69,6 +69,16 @@ class AppointmentView(viewsets.ModelViewSet):
             return Appointment.objects.all()
 
 
+class AvailabilityView(viewsets.ModelViewSet):
+
+    serializer_class = AvailabilitySerializer
+    pagination_class = StandardResultsSetPagination
+    permission_classes = (IsAuthenticated, )
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return AvailabilityTime.objects.all()
+
+
 class InquiryView(viewsets.ModelViewSet):
     
     serializer_class = InquirySerializer

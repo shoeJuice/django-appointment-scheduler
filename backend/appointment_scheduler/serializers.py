@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from .models import Appointment
+from .models import AvailabilityTime
 from .models import Employee
 from .models import InquiryMessage
 from .models import User
@@ -17,7 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class EmployeeSerializer(serializers.ModelSerializer):
 
-    availabilities = serializers.StringRelatedField(many=True)
+    availabilities = serializers.HyperlinkedRelatedField(many=True, view_name='availability-detail', read_only=True)
     appointments = serializers.HyperlinkedRelatedField(many=True, view_name='appointment-detail', read_only=True)
 
     class Meta:
@@ -36,11 +37,19 @@ class AppointmentSerializer(serializers.ModelSerializer):
 
     customer = serializers.HyperlinkedRelatedField(many=False, view_name='user-detail', read_only=True)
     employee = serializers.HyperlinkedRelatedField(many=False, view_name='employee-detail', read_only=True)
-    appointment_date = serializers.StringRelatedField(many=False)
+    appointment_date = serializers.HyperlinkedRelatedField(many=False, view_name='availability-detail', read_only=True)
 
     class Meta:
         model = Appointment
         fields = ('id', 'customer', 'employee', 'appointment_date')
+
+
+class AvailabilitySerializer(serializers.ModelSerializer):
+
+    employee = serializers.HyperlinkedRelatedField(many=False, view_name='employee-detail', read_only=True)
+    class Meta:
+        model = AvailabilityTime
+        fields = ('start_from', 'end_at', 'employee')
 
 
 class InquirySerializer(serializers.ModelSerializer):

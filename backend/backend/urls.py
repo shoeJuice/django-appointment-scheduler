@@ -29,6 +29,7 @@ router.register(r'users', views.UserView, 'user')
 router.register(r'employees', views.EmployeeView, 'employee')
 router.register(r'appointments', views.AppointmentView, 'appointment')
 router.register(r'inquiries', views.InquiryView, 'inquiry')
+router.register(r'availabilities', views.AvailabilityView, 'availability')
 
 
 
