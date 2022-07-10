@@ -81,7 +81,6 @@ export default async (req: Request, res: Response) => {
         "http://localhost:8000/api/user/",
         userConfig
       );
-      console.log(userData);
       res.status(200).json({ user: userData, access: accessToken });
     }
   } else {

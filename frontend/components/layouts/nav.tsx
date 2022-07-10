@@ -1,14 +1,24 @@
 import React, { useContext } from "react";
-import { Flex, HStack, Text, Button, Image } from "@chakra-ui/react";
+import { Flex, HStack, Text, Button, Image, IconButton } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import AuthContext from "../../context/AuthContext";
+import ZoukStudiosIcon from "../ZoukStudiosIcon";
+
+type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
+
+// import logout from "../../pages/api/logout";
 /**
  * Navigation Component
  */
 function Nav() {
   // @ts-ignore
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext<any>(AuthContext);
+
+  const handleLogout = async (e: ButtonEvent) => {
+    e.preventDefault();
+    await logout();
+  };
 
   return (
     <Flex
@@ -17,14 +27,9 @@ function Nav() {
       justifyContent="space-between"
       alignItems="center"
     >
-      <>
-        <NextImage
-          width="150px"
-          height="80px"
-          src="/zouk_studios_icon.svg"
-          priority={true}
-        />
-      </>
+      <NextLink href={"/"}>
+        <IconButton size='xs' icon={<ZoukStudiosIcon boxSize='10em' />} aria-label="Zouk-Studios-Icon" variant='link'/>
+      </NextLink>
 
       <HStack spacing={5}>
         <NextLink href="/">
@@ -67,13 +72,20 @@ function Nav() {
             Contact Us!
           </Button>
         </NextLink>
-        {user ? <Text color='white'>Logged in as {user.username} </Text> : <></>}
-        <NextLink href={user ? "/auth/signout" : "/auth/signin"}>
+        {user ? (
+          <Text color="white">Logged in as {user.username} </Text>
+        ) : (
+          <></>
+        )}
+        <NextLink href={"/auth/signin"}>
           <Button
             bgColor="orange.300"
             color="white"
             _hover={{ bgColor: "orange.400" }}
             _active={{ bgColor: "orange.500" }}
+            onClick={(e) => {
+              user ? handleLogout(e) : console.log("To login..");
+            }}
           >
             {user ? "Sign Out" : "Sign In"}
           </Button>

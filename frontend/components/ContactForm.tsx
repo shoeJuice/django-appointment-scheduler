@@ -20,7 +20,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
  */
 
 type ContactFormProps = {
-  width: number | "px" | string;
+  width?: number | "px" | string;
 };
 
 type GuestMessage = {

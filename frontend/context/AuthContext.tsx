@@ -20,8 +20,8 @@ interface RegisterInfo {
 }
 
 export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState();
-  const [accessToken, setAccessToken] = useState();
+  const [user, setUser] = useState<any>();
+  const [accessToken, setAccessToken] = useState<any>();
   const [error, setError] = useState<any>();
 
   const router = useRouter();
@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }: any) => {
         body,
         config
       );
-      console.log(accessResponse.user);
 
       if (accessResponse && accessResponse.user) {
         setUser(accessResponse.user);
@@ -77,7 +76,44 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const register = async ({ username, email, password, first_name, last_name } : RegisterInfo) => {
+  const logout = async () => {
+    try {
+      // remove the http only cookie
+      await axios.post("http://localhost:3000/api/logout");
+      // remove the access to ken and the user from the state
+      setUser(null);
+      setAccessToken(null);
+    } catch (error: AxiosError | any) {
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.data) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          setError(error.response.data.message);
+          return;
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          setError("Something went wrong.");
+          return;
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          setError("Something went wrong");
+          return;
+        }
+      } else {
+        setError(error);
+      }
+    }
+  };
+
+  const register = async ({
+    username,
+    email,
+    password,
+    first_name,
+    last_name,
+  }: RegisterInfo) => {
     const config = {
       headers: {
         Accept: "application/json",
@@ -89,7 +125,7 @@ export const AuthProvider = ({ children }: any) => {
       email,
       password,
       first_name,
-      last_name
+      last_name,
     };
     try {
       const { data: accessResponse } = await axios.post(
@@ -132,7 +168,7 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, error, login, register }}>
+    <AuthContext.Provider value={{ user, accessToken, error, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
