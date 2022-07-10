@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/Head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import Animate from "../../components/layouts/Animate";
+import Animate from "../../components/project/layouts/Animate";
 import {
   Box,
   Button,
@@ -17,7 +17,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import AuthContext from "../../context/AuthContext";
-import Layout from "../../components/layouts/main";
+import Layout from "../../components/project/layouts/main";
 import axios from "axios";
 import type { AxiosError } from "axios";
 import { useRouter } from "next/router";

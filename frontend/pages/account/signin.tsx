@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/Head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import Animate from "../../components/layouts/Animate";
+import Animate from "../../components/project/layouts/Animate";
 import {
   Box,
   Button,
@@ -18,7 +18,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import AuthContext from "../../context/AuthContext";
-import Layout from "../../components/layouts/main";
+import Layout from "../../components/project/layouts/main";
 import NextLink from 'next/link'
 
 const SignIn: NextPage = () => {
@@ -80,7 +80,7 @@ const SignIn: NextPage = () => {
           Log In
         </Button>
         <NextLink href='/auth/register'>
-          <Link mt={5} color='white'>Don't have an account? Click here to register.</Link>
+          <Link mt={5} color='white'>Don&apost have an account? Click here to register.</Link>
         </NextLink>
       </Flex>
     </Layout>

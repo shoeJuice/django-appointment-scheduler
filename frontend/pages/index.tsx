@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import Head from "next/Head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import Animate from '../components/layouts/Animate'
+import Animate from '../components/project/layouts/Animate'
 
 import { Box, Flex, HStack, Text } from "@chakra-ui/react";
-import ContactForm from '../components/ContactForm'
+import ContactForm from '../components/modules/forms/ContactForm'
 
 const Home: NextPage = () => {
   return (

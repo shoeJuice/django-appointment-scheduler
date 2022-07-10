@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Flex, HStack, Text, Button, Image, IconButton } from "@chakra-ui/react";
 import NextImage from "next/image";
 import NextLink from "next/link";
-import AuthContext from "../../context/AuthContext";
-import ZoukStudiosIcon from "../ZoukStudiosIcon";
+import AuthContext from "../../../context/AuthContext";
+import ZoukStudiosIcon from "../media/ZoukStudiosIcon";
 
 type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 

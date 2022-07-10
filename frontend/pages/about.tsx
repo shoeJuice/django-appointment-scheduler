@@ -3,8 +3,8 @@ import { Text, Flex, Divider, Box, HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/Head";
 
-import Main from "../components/layouts/main";
-import ContactCard from "../components/ContactCard";
+import Main from "../components/project/layouts/main";
+import ContactCard from "../components/modules/forms/ContactCard";
 
 const AboutPage: NextPage = () => {
   return (

@@ -138,7 +138,7 @@ function ContactForm({ width }: ContactFormProps) {
         _hover={{ bgColor: "orange.400" }}
         _active={{ bgColor: "orange.500" }}
         type="submit"
-        onClick={() => {
+        onClick={(e) => {
           const contactMessage : GuestMessage = {
             sender_first_name: firstName,
             sender_last_name: lastName,
@@ -146,6 +146,7 @@ function ContactForm({ width }: ContactFormProps) {
             sender_phone_number: telephoneAddress,
             inquiry_description: message,
           };
+          e.preventDefault();
           console.log(contactMessage)
           handleSubmit(contactMessage);
         }}

@@ -5,7 +5,7 @@ import Router, { useRouter } from "next/router";
 import { RouterContext } from "next/dist/next-server/lib/router-context";
 import Enzyme from "enzyme";
 
-import Nav from "../components/layouts/nav";
+import Nav from "../components/project/layouts/nav";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 

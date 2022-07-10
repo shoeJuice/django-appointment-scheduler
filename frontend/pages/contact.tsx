@@ -3,9 +3,8 @@ import { Text, Flex, Divider, Box, HStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Head from "next/Head";
 
-import Main from "../components/layouts/main";
-import ContactForm from "../components/ContactForm";
-
+import Main from "../components/project/layouts/main";
+import ContactForm from "../components/modules/forms/ContactForm";
 
 const ContactPage: NextPage = () => {
   return (
@@ -15,13 +14,13 @@ const ContactPage: NextPage = () => {
         <link rel="icon" href="/zouk_studios_icon_alt.ico" />
       </Head>
       <Flex
-        marginY='auto'
+        marginY="auto"
         flexDirection="column"
         alignItems="center"
         py={10}
         px={20}
         borderRadius={8}
-        boxShadow='dark lg'
+        boxShadow="dark lg"
       >
         <Text
           color="white"

@@ -1,6 +1,6 @@
 import { Box, Container } from "@chakra-ui/react";
 import Head from "next/Head";
-import { AuthProvider } from "../../context/AuthContext";
+import { AuthProvider } from "../../../context/AuthContext";
 import Nav from "./nav";
 
 const Splash = ({ children, router }: any) => {
